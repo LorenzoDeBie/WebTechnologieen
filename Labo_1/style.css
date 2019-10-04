@@ -1,0 +1,11 @@
+#snakeCanvas {
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-image: url("images/snake.jpg");
+    background-position: right center;
+    border: black solid 1px;
+}
+
+#gameOverText {
+    display: none;
+}
