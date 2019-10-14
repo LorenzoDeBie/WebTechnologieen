@@ -1,35 +1,56 @@
-import playField from "./snake.js";
+import Game from "./Snake/Game.js";
+import Tile from "./Snake/Tile.js";
+import Snake from "./Snake/snake.js";
 
 let canvas = document.getElementById("snakeCanvas");
 let ctx = canvas.getContext("2d");
 
-let game = new playField(canvas.width, canvas.height, 20, 4);
-ctx.fillStyle = game.snake.color;
+let tileSize = 20;
+let rows = Math.floor(canvas.width / tileSize);
+let cols = Math.floor(canvas.height / tileSize);
+let game = new Game(rows, cols, 5);
+ctx.fillStyle = "#FF0000";
 
-let moveAndDrawTimer = setInterval(() => {
-    game.gameUpdate();
+ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+let updateTimer = setInterval(function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = game.snake.color;
-    for(let i = 0; i < game.snake.positions.length - 1; i++) {
-        let pos = game.getSnakePosition(i);
-        ctx.fillRect(pos.posX, pos.posY, game.snake.snakeSize, game.snake.snakeSize);
+    game.update();
+    if(game.running) {
+        //draw snake
+        for(let i = 0; i < game.snake.tiles.length - 1; i++) {
+            let gameTile = game.snake.tiles[i];
+            console.log("drawing snake tile at ", gameTile.tileX, ", ", gameTile.tileY);
+            ctx.fillRect((gameTile.tileX - 1 ) * tileSize, (gameTile.tileY - 1) * tileSize, tileSize, tileSize);
+        }
+
+        //draw Food
+        for(let food of game.foods) {
+            console.log("drawing food at ", food.position.tileX, ", ", food.position.tileY);
+            ctx.drawImage(food.image, (food.position.tileX - 1) * tileSize, (food.position.tileY - 1) * tileSize, tileSize, tileSize);
+        }
     }
-    for (let food of game.foodPositions) {
-        ctx.drawImage(new Ima)
-    }
-    if(!game.snake.alive) {
-        clearInterval(moveAndDrawTimer);
+    else {
+        clearInterval(updateTimer);
         document.getElementById("gameOverText").style.display = "block";
     }
 }, 500);
 
 document.addEventListener('keyup', (e) => {
-   if(e.code === "ArrowRight") game.snake.changeDirection("right");
-   else if(e.code === "ArrowLeft") game.snake.changeDirection("left");
-   else if(e.code === "ArrowUp") game.snake.changeDirection("up");
-   else if(e.code === "ArrowDown") game.snake.changeDirection("down");
+    if(e.code === "ArrowRight" && game.snake.direction !== Snake.snakeDirections.LEFT) {
+        game.snake.direction = Snake.snakeDirections.RIGHT;
+        game.snake.velocity = 1 ;
+    }
+    else if(e.code === "ArrowLeft" && game.snake.direction !== Snake.snakeDirections.RIGHT) {
+        game.snake.direction = Snake.snakeDirections.LEFT;
+        game.snake.velocity = -1;
+    }
+    else if(e.code === "ArrowUp" && game.snake.direction !== Snake.snakeDirections.DOWN) {
+        game.snake.direction = Snake.snakeDirections.UP;
+        game.snake.velocity = -1;
+    }
+    else if(e.code === "ArrowDown" && game.snake.direction !== Snake.snakeDirections.UP) {
+        game.snake.direction = Snake.snakeDirections.DOWN;
+        game.snake.velocity = 1;
+    }
 });
-
-
-

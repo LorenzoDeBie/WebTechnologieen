@@ -1,6 +1,6 @@
 class Snake {
 
-    constructor(point) {
+    constructor(point, playfield) {
         this.color = "#FF0000";
         this.positions = [point, null];
         this.currentDirection = "H";
@@ -8,6 +8,7 @@ class Snake {
         this.velY = 0;
         this.alive = true;
         this.snakeSize = 10;
+        this.parent = playfield;
     }
 
     getPositionX() {
@@ -37,12 +38,10 @@ class Snake {
         }
     }
 
-    move(newX, newY, index = 0) {
+    move(newTile, index = 0) {
         if(this.positions[index] !== null) {
-            let point = this.positions[index];
-            this.move(point.posX, point.posY, index+1);
-            point.posX = newX;
-            point.posY = newY;
+            this.move(this.positions[index], index+1);
+            this.positions[index] = newTile;
         }
     }
 
@@ -78,29 +77,40 @@ class Snake {
 
 export default class playField {
     constructor(width, height, tileSize, nFoods) {
-        this.tilesX = Math.floor(width / tileSize);
-        this.tilesY = Math.floor(height / tileSize);
+        let tilesX = Math.floor(width / tileSize);
+        let tilesY = Math.floor(height / tileSize);
         this.tileSize = tileSize;
-        let startPointSnake = this.giveRandomPoint();
+        this.tiles = [];
+        //create the playing field
+        for(let i = 0; i < tilesX; i++) {
+            let row = [];
+            for(let n = 0; n < tilesY; n++) {
+                row.push(new Tile(i, n));
+            }
+            this.tiles.push(row);
+        }
+        //get random start point for snake
+        let startPointSnake = this.giveRandomTile();
         this.snake = new Snake(startPointSnake);
         this.foodPositions = [];
+        this.foods = [];
         for(let i = 0; i < nFoods; i ++) {
             this.foodPositions.push(this.createFood());
         }
     }
 
     createFood() {
-        return new Food(this.giveRandomPoint());
+        return new Food(this.giveRandomTile());
     }
 
-    giveRandomPoint() {
-        let maxW = this.tilesX * 0.75;
-        let minW = 0.25 * this.tilesX;
+    giveRandomTile() {
+        let maxW = this.tiles.length * 0.75;
+        let minW = 0.25 * this.tiles.length;
         let x = Math.floor(Math.random() * (maxW - minW) + minW);
-        let maxH = this.tilesY * 0.75;
-        let minH = 0.25 * this.tilesY;
+        let maxH = this.tiles[0].length * 0.75;
+        let minH = 0.25 * this.tiles[0].length;
         let y = Math.floor(Math.random() * (maxH - minH) + minW);
-        return new Point(x, y);
+        return this.tiles[x][y];
     }
 
     gameUpdate() {
@@ -114,19 +124,26 @@ export default class playField {
         let pos = this.snake.positions[index];
         return new Point(pos.posX * this.snake.snakeSize, pos.posY * this.snake.snakeSize);
     }
+
+    getTile(x, y) {
+        return this.tiles[x][y];
+    }
 }
 
 class Food {
     static ImageUrls = ["food1.png", "food2.png", "food3.png", "food4.png", "food5.png"];
-    constructor(posX, posY) {
-        this.position = new Point(posX, posY);
-        this.imageUrl = "images/food" + Math.floor(Math.random() * (Food.ImageUrls.length - 1) + 1) + ".png";
+    static ImageWidth; static ImageHeight;
+    constructor(tile) {
+        this.position = tile;
+        let image = new Image(Food.ImageWidth, Food.ImageHeight);
+        image.src = "images/food" + Math.floor(Math.random() * (Food.ImageUrls.length - 1) + 1) + ".png";
+        this.image = image;
     }
 }
 
-class Point {
+class Tile {
     constructor(tileX, tileY) {
-        this.posX = tileX;
-        this.posY = tileY;
+        this.relX = tileX;
+        this.relY = tileY;
     }
 }
