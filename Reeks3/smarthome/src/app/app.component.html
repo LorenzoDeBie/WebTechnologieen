@@ -1,0 +1,50 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+  <a class="navbar-brand" href="index.html">Smart home dashboard</a>
+  <div class="collapse navbar-collapse" id="navbarResponsive">
+    <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+        <a class="nav-link" href="#">
+          <i class="fas fa-home"></i>
+          <span class="nav-link-text">Overview</span>
+        </a>
+      </li>
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="temperature">
+        <a class="nav-link" href="#">
+          <i class="fas fa-temperature-high"></i>
+          <span class="nav-link-text">Temperature</span>
+        </a>
+      </li>
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Energy">
+        <a class="nav-link" href="#">
+          <i class="fas fa-bolt"></i>
+          <span class="nav-link-text">Energy</span>
+        </a>
+      </li>
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Security">
+        <a class="nav-link" href="#">
+          <i class="fas fa-shield-alt"></i>
+          <span class="nav-link-text">Security</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <div class="card mb-3">
+      <div class="card-header">
+        <i class="fas fa-bell"></i> Notifications
+      </div>
+      <div class="card-body">
+        <div class="list-group list-group-flush small">
+          <app-notification *ngFor="let notification of notifications" icon="{{notification.icon}}" boodschap="{{notification.message}}"
+              timestamp="{{notification.id}}"></app-notification>
+          <a class="list-group-item list-group-item-action">Load more...</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
