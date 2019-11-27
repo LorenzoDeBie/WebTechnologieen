@@ -10,7 +10,7 @@
         <div class='text'>Current</div>
       </div>
       <div class="number">
-        22
+        {{temperature}}
       </div>
     </div>
 
@@ -19,7 +19,7 @@
         <div class='text'>Target</div>
       </div>
       <div class="number">
-        <input type="number" value="23"/>
+        <input [(ngModel)]="temperature" type="number" value="{{temperature}}"/>
       </div>
     </div>
 

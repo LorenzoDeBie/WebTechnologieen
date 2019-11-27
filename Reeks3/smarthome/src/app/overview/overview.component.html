@@ -4,9 +4,9 @@
   </div>
   <div class="card-body">
     <div class="list-group list-group-flush small">
-      <app-notification *ngFor="let notification of notifications" icon="{{notification.icon}}" boodschap="{{notification.message}}"
-                        timestamp="{{notification.id}}"></app-notification>
-      <a class="list-group-item list-group-item-action">Load more...</a>
+      <app-notification *ngFor="let i of [].constructor(n); let in = index;" icon="{{notifications[in].icon}}" boodschap="{{notifications[in].message}}"
+                        ></app-notification>
+      <a *ngIf="showMore" class="list-group-item list-group-item-action" (click)="more()">Load more...</a>
     </div>
   </div>
 </div>

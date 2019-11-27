@@ -9,6 +9,7 @@ export class TemperatureGaugeComponent implements OnInit {
 
   @Input() title: string;
 
+  temperature = 23;
   constructor() { }
 
   ngOnInit() {

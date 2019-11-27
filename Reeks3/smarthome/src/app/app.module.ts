@@ -9,6 +9,8 @@ import { TemperatureComponent } from './temperature/temperature.component';
 import { EnergyComponent } from './energy/energy.component';
 import { SecurityComponent } from './security/security.component';
 import { TemperatureGaugeComponent } from './temperature-gauge/temperature-gauge.component';
+import {FormsModule} from '@angular/forms';
+import { NotificationDetailComponent } from './notification-detail/notification-detail.component';
 
 @NgModule({
   declarations: [
@@ -18,11 +20,13 @@ import { TemperatureGaugeComponent } from './temperature-gauge/temperature-gauge
     TemperatureComponent,
     EnergyComponent,
     SecurityComponent,
-    TemperatureGaugeComponent
+    TemperatureGaugeComponent,
+    NotificationDetailComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

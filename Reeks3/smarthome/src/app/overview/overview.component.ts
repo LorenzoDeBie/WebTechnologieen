@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OverviewComponent implements OnInit {
 
+  // number of items to show
+  n = 5;
+
   notifications = [{
     id: 0,
     message: 'Wake up alarm in master bedroom',
@@ -109,9 +112,19 @@ export class OverviewComponent implements OnInit {
     }
   ];
 
+  showMore = (this.notifications.length > 0);
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  more() {
+    this.n = this.n + 5;
+    if (this.n >= this.notifications.length) {
+      this.n = this.notifications.length;
+      // hide load more button
+      this.showMore = false;
+    }
+  }
 }
