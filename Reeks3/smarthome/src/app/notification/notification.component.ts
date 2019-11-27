@@ -7,9 +7,10 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class NotificationComponent implements OnInit {
 
-  @Input() boodschap: string;
+  @Input() message: string;
   @Input() icon: string;
-  @Input() timestamp = new Date();
+  timestamp = new Date();
+
   constructor() { }
 
   ngOnInit() {

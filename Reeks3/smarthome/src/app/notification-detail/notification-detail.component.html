@@ -1,0 +1,2 @@
+<p>{{id}}</p>
+<app-notification *ngIf="notification | async" message="{{(notification | async)?.message}}" icon="{{(notification | async)?.icon}}"></app-notification>
