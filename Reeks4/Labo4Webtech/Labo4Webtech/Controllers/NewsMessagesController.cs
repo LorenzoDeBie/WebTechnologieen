@@ -5,36 +5,30 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Labo4Webtech.Models;
 using Microsoft.Extensions.Localization;
-using TheaterAcademie.Models;
+using Microsoft.AspNetCore.Authorization;
 
-namespace TheaterAcademie
+namespace Labo4Webtech
 {
     public class NewsMessagesController : Controller
     {
-        private readonly TheaterAcademieContext _context;
-		private readonly IStringLocalizer<NewsMessagesController> _localizer;
+        private readonly TheatersContext _context;
+        private readonly IStringLocalizer _localizer;
 
-        public NewsMessagesController(TheaterAcademieContext context, IStringLocalizer<NewsMessagesController> localizer)
+        public NewsMessagesController(TheatersContext context, IStringLocalizer<NewsMessagesController> localizer)
         {
             _context = context;
-			_localizer = localizer;
+            _localizer = localizer;
         }
 
         // GET: NewsMessages
         public async Task<IActionResult> Index()
         {
-			ViewData["noNewsMessage"] = _localizer["NoMessages"];
+            //ViewData["emptyMessage"] = "Geen nieuwsberichten op dit moment."; 
+            ViewData["emptyMessage"] = _localizer["emptyMessage"];
             return View(await _context.NewsMessage.ToListAsync());
         }
-
-		// GET: NewsMessages/NoMessages
-		public IActionResult NoMessages()
-		{
-			//var test = _localizer.GetAllStrings();
-			ViewData["noNewsMessage"] = _localizer["NoMessages"];
-			return View("Index", new List<NewsMessage>());
-		}
 
         // GET: NewsMessages/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -55,6 +49,7 @@ namespace TheaterAcademie
         }
 
         // GET: NewsMessages/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -65,18 +60,20 @@ namespace TheaterAcademie
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,Title,Message,Date")] NewsMessage newsMessage)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(newsMessage);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Details), new { id=newsMessage.Id });
+                return RedirectToAction(nameof(Details), new { id = newsMessage.Id });
             }
             return View(newsMessage);
         }
 
         // GET: NewsMessages/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -97,6 +94,7 @@ namespace TheaterAcademie
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,Message,Date")] NewsMessage newsMessage)
         {
             if (id != newsMessage.Id)
@@ -128,6 +126,7 @@ namespace TheaterAcademie
         }
 
         // GET: NewsMessages/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -148,6 +147,7 @@ namespace TheaterAcademie
         // POST: NewsMessages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             var newsMessage = await _context.NewsMessage.FindAsync(id);

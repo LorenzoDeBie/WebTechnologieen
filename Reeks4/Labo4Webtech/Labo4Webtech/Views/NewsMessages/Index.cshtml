@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Labo4Webtech.Models.NewsMessage>
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using Microsoft.AspNetCore.Identity
+@inject  SignInManager<IdentityUser> SignInManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div id="content" class="container clearfix">
+    <section class="clearfix">
+        <h1>@Localizer["taal"]</h1>
+        <h2 class="structural">Laatste nieuwsberichten van de academie:</h2>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <p><a asp-action="Create" class="btn btn-success">Create New</a></p>
+        }
+        @if (Model == null || Model.Count<NewsMessage>() == 0)
+        {
+            <div>
+                <p>@ViewData["emptyMessage"]</p>
+            </div>
+        }
+        else
+        {
+            <ul>
+                @foreach (var item in Model)
+                {
+                <li>
+                    <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
+                    @if (item.Id > 3)
+                    {
+                        <img src="~/news/default/dummy.jpg" alt="newsmessage" width="300" height="135" />
+                    }
+                    else
+                    {
+                        <img src="~/news/@(item.Id).jpg" alt="newsmessage" width="300" height="135" />
+                    }
+                    <p>|Toegevoegd op: @Html.DisplayFor(modelItem => item.Date)</p>
+                    <br />
+                    <p>@Html.DisplayFor(modelItem => item.Message)</p>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="readmore">Lees meer.</a>
+                </li>
+                }
+            </ul>
+        }
+    </section>
+</div>

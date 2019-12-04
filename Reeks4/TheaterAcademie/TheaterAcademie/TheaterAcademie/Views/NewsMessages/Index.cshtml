@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<TheaterAcademie.Models.NewsMessage>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
 	ViewData["Title"] = "Index";
@@ -8,8 +10,8 @@
 	<section id="banner">
 		<div class="container">
 			<div id="slogan">
-				<h2>Koninklijke theater academie</h2>
-				<p>Waar kunst en beeld samen een geheel vormen</p>
+				<h2>@Localizer["Name"]</h2>
+				<p>@Localizer["Slogan"]</p>
 			</div>
 		</div>
 	</section>
@@ -19,11 +21,11 @@
 	<section class="clearfix">
 		@if (Model.Count() == 0)
 		{
-			<h2>Er zijn geen nieuwsberichten op dit moment. Kom binnen enkele dagen zeker terug!</h2>
+			<h2>@ViewData["noNewsMessage"]</h2>
 		}
 		else
 		{
-			<h2 class="structural">Laatste nieuwsberichten van de academie:</h2>
+			<h2 class="structural">@Localizer["Latest"]</h2>
 			<ul>
 				@foreach (var item in Model)
 				{
@@ -31,18 +33,18 @@
 					<li>
 						<h3>@Html.DisplayFor(model => item.Title)</h3>
 						<img src="/Content/news/@Html.DisplayFor(model => picture)" alt="newsmessage01" width="300" height="135" />
-						<p>|Toegevoegd op: @Html.DisplayFor(model => item.Date)</p>
+						<p>|@Localizer["Added"] @Html.DisplayFor(model => item.Date)</p>
 						<br />
 						<p>
 							@Html.DisplayFor(model => item.Message)
 						</p>
-						<a asp-action="Details" asp-route-id="@item.Id" title="Lees meer over dit bericht" class="readmore">Lees meer over Landelijk projectwerk</a>
+						<a asp-action="Details" asp-route-id="@item.Id" title="@Localizer["ReadMore"]" class="readmore">@Localizer["ReadMore"]</a>
 					</li>
 				}
 			</ul>
 		}
 	</section>
-	<a asp-action="Create" asp-controller="NewsMessages" class="">Maak een nieuwe post</a>
+	<a asp-action="Create" asp-controller="NewsMessages" class="">@Localizer["NewPost"]</a>
 }
 
 
