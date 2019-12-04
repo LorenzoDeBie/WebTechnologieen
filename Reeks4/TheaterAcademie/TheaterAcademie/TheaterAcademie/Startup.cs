@@ -38,6 +38,23 @@ namespace TheaterAcademie
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			});
 
+			services.Configure<IdentityOptions>(options =>
+			{
+				//password restrictions
+				options.Password.RequiredLength = 6;
+				options.Password.RequireDigit = true;
+				options.Password.RequireUppercase = true;
+				options.Password.RequireLowercase = true;
+				options.Password.RequireNonAlphanumeric = false;
+
+				//lockout settings
+				options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+				options.Lockout.MaxFailedAccessAttempts = 3;
+
+				//email
+				options.User.RequireUniqueEmail = true;
+			});
+
 			services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlServer(
 					Configuration.GetConnectionString("DefaultConnection")));

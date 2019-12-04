@@ -1,6 +1,10 @@
 ﻿@model IEnumerable<TheaterAcademie.Models.NewsMessage>
 @using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Identity
 @inject IViewLocalizer Localizer
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
 
 @{
 	ViewData["Title"] = "Index";
@@ -44,7 +48,10 @@
 			</ul>
 		}
 	</section>
-	<a asp-action="Create" asp-controller="NewsMessages" class="">@Localizer["NewPost"]</a>
+	@if (SignInManager.IsSignedIn(User) )
+	{ 
+		<a asp-action="Create" asp-controller="NewsMessages" class="">@Localizer["NewPost"]</a>
+	}	
 }
 
 

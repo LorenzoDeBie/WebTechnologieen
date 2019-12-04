@@ -1,5 +1,10 @@
 ﻿@model TheaterAcademie.Models.NewsMessage
 
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
 @{
     ViewData["Title"] = "Details";
 }
@@ -7,31 +12,35 @@
 <h2>Details</h2>
 
 <div>
-    <h4>NewsMessage</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Message)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Message)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-    </dl>
+	<h4>NewsMessage</h4>
+	<hr />
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.Title)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Title)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Message)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Message)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Date)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Date)
+		</dd>
+	</dl>
 </div>
 <div>
-	<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-	<a asp-action="Delete" asp-route-id="@Model.Id">Delete</a> |
+	@if (SignInManager.IsSignedIn(User) )
+	{
+		<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> <text>|</text>
+		<a asp-action="Delete" asp-route-id="@Model.Id">Delete</a> <text>|</text>
+	}
+
 	<a asp-action="Index">Back to List</a>
 </div>

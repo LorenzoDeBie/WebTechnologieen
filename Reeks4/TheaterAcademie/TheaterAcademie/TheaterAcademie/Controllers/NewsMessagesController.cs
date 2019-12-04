@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -54,16 +55,18 @@ namespace TheaterAcademie
             return View(newsMessage);
         }
 
-        // GET: NewsMessages/Create
-        public IActionResult Create()
+		// GET: NewsMessages/Create
+		[Authorize]
+		public IActionResult Create()
         {
             return View();
         }
 
-        // POST: NewsMessages/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+		// POST: NewsMessages/Create
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[Authorize]
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Message,Date")] NewsMessage newsMessage)
         {
@@ -76,8 +79,10 @@ namespace TheaterAcademie
             return View(newsMessage);
         }
 
-        // GET: NewsMessages/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+
+		// GET: NewsMessages/Edit/5
+		[Authorize]
+		public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -92,10 +97,12 @@ namespace TheaterAcademie
             return View(newsMessage);
         }
 
-        // POST: NewsMessages/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+
+		// POST: NewsMessages/Edit/5
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[Authorize]
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,Message,Date")] NewsMessage newsMessage)
         {
@@ -127,8 +134,9 @@ namespace TheaterAcademie
             return View(newsMessage);
         }
 
-        // GET: NewsMessages/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+		// GET: NewsMessages/Delete/5
+		[Authorize]
+		public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -145,8 +153,9 @@ namespace TheaterAcademie
             return View(newsMessage);
         }
 
-        // POST: NewsMessages/Delete/5
-        [HttpPost, ActionName("Delete")]
+		// POST: NewsMessages/Delete/5
+		[Authorize]
+		[HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
