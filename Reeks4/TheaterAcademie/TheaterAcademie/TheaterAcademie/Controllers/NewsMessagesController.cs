@@ -129,8 +129,8 @@ namespace TheaterAcademie
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
-            }
+				return RedirectToAction(nameof(Details), new { id = newsMessage.Id });
+			}
             return View(newsMessage);
         }
 
