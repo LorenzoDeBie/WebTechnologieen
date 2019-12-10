@@ -10,7 +10,6 @@ export class NotificationComponent implements OnInit {
   @Input() message: string;
   @Input() icon: string;
   timestamp = new Date();
-
   constructor() { }
 
   ngOnInit() {

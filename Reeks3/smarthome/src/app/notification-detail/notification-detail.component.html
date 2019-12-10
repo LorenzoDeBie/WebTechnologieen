@@ -1,2 +1,8 @@
-<p>{{id}}</p>
-<app-notification *ngIf="notification | async" message="{{(notification | async)?.message}}" icon="{{(notification | async)?.icon}}"></app-notification>
+<div class="card-header">
+  <i class="fas fa-bell"></i> Notification <span *ngIf="notification !== undefined">{{notification.id}}</span>
+</div>
+<div class="card-body">
+  <div class="list-group list-group-flush small">
+    <app-notification icon="{{notification.icon}}" message="{{notification.message}}" *ngIf="notification !== undefined"></app-notification>
+  </div>
+</div>

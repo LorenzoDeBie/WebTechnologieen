@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-temperature-gauge',
@@ -7,9 +7,9 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class TemperatureGaugeComponent implements OnInit {
 
-  @Input() title: string;
-
+  title: string;
   temperature = 23;
+
   constructor() { }
 
   ngOnInit() {

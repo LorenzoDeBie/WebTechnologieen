@@ -11,7 +11,6 @@ import { SecurityComponent } from './security/security.component';
 import { TemperatureGaugeComponent } from './temperature-gauge/temperature-gauge.component';
 import {FormsModule} from '@angular/forms';
 import { NotificationDetailComponent } from './notification-detail/notification-detail.component';
-import {NotificationService} from './notification.service';
 import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
@@ -31,7 +30,7 @@ import {HttpClientModule} from '@angular/common/http';
     FormsModule,
     HttpClientModule
   ],
-  providers: [NotificationService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

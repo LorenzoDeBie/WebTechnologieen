@@ -1,14 +1,10 @@
-<div class="container-fluid">
-  <div class="card mb-3">
-    <div class="card-header">
-      <i class="fas fa-bell"></i> Notifications
-    </div>
-    <div class="card-body">
-      <div class="list-group list-group-flush small">
-        <app-notification routerLink="/notification/{{n.id}}" *ngFor="let n of notifications.slice(0, n)" icon="{{n.icon}}" message="{{n.message}}"></app-notification>
-        <a [hidden]="n >= notifications.length" (click)="more()" class="list-group-item list-group-item-action">Load more...</a>
-      </div>
-    </div>
+<div class="card-header">
+  <i class="fas fa-bell"></i> Notifications
+</div>
+<div class="card-body">
+  <div class="list-group list-group-flush small">
+    <app-notification *ngFor="let not of notifications.slice(0,n)" icon="{{not.icon}}" message="{{not.message}}" routerLink="/notification/{{not.id}}"></app-notification>
+    <a *ngIf="n < notifications.length" class="list-group-item list-group-item-action" (click)="showMore()">Load more...</a>
   </div>
 </div>
 

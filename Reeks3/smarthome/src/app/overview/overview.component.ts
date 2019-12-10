@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NotificationService} from '../notification.service';
+import {Notification} from '../notification';
 
 @Component({
   selector: 'app-overview',
@@ -7,29 +8,24 @@ import {NotificationService} from '../notification.service';
   styleUrls: ['./overview.component.css']
 })
 export class OverviewComponent implements OnInit {
-
-  // number of items to show
-  n = 5;
-  notifications = [];
-  showMore: boolean;
+  notifications: Notification[] = [];
 
   constructor(private notificationService: NotificationService) {
-    this.notificationService.notifications.subscribe(notifications => {
-      this.notifications = notifications.notifications;
-      this.showMore = this.notifications.length > 0;
+  }
+
+  n = 5;
+
+
+  ngOnInit() {
+    this.notificationService.getAllNotifications().subscribe((notifications) => {
+      this.notifications = notifications;
     });
   }
 
-  ngOnInit() {
-
-  }
-
-  more() {
-    this.n = this.n + 5;
-    if (this.n >= this.notifications.length) {
+  showMore = () => {
+    this.n += 5;
+    if (this.n > this.notifications.length) {
       this.n = this.notifications.length;
-      // hide load more button
-      this.showMore = false;
     }
   }
 }
